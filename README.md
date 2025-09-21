@@ -41,8 +41,7 @@ python_terminal/
 
 1. **Install dependencies:**
    ```sh
-   pip install -r backend/requirements.txt
-   pip install -r backend/terminal_project/requirements.txt
+   pip install -r requirements.txt
    ```
 2. **Run the FastAPI server:**
    ```sh
