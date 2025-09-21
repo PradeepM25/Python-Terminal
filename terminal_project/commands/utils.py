@@ -27,11 +27,10 @@ HELP_TEXTS = {
 
 def show_manual(args, console):
     if not args:
-        console.print("Usage: man <command>", style="bold red")
-        return
+        return "Usage: man <command>"
     cmd = args[0]
     help_text = HELP_TEXTS.get(cmd)
     if help_text:
-        console.print(f"[bold cyan]{cmd}[/bold cyan]: {help_text}")
+        return f"{cmd}: {help_text}"
     else:
-        console.print(f"No manual entry for {cmd}", style="bold red")
+        return f"No manual entry for {cmd}"

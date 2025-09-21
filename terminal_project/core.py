@@ -54,10 +54,11 @@ def process_command(cmd: str, capture: bool = False):
         return "" if capture else None
 
     if command == "man":
+        manual_text = show_manual(args, console)
         if capture:
-            return show_manual(args, console), os.getcwd()
+            return manual_text, os.getcwd()
         else:
-            show_manual(args, console)
+            console.print(manual_text)
             return
 
     if command == "history":
