@@ -11,10 +11,15 @@ const term = new Terminal({
 
 term.open(document.getElementById("terminal"));
 
+
 let currentInput = "";
 let currentCwd = "~";
 let username = "user";
 let hostname = "webhost";
+
+// Command history
+let commandHistory = [];
+let historyIndex = -1;
 
 function printPrompt() {
   // use ANSI escape codes for colored prompt
@@ -49,14 +54,22 @@ async function fetchUserInfo() {
 term.write("Welcome to Web Terminal!\r\n");
 fetchUserInfo().then(initCwd);
 
+
 term.onKey(async ({ key, domEvent }) => {
   const printable = !domEvent.altKey && !domEvent.ctrlKey && !domEvent.metaKey;
+
+  // Prevent default cursor movement for up/down arrows
+  if (domEvent.key === "ArrowUp" || domEvent.key === "ArrowDown") {
+    domEvent.preventDefault();
+  }
 
   if (domEvent.key === "Enter") {
     const cmd = currentInput.trim();
     term.write("\r\n");
 
     if (cmd.length > 0) {
+      commandHistory.push(cmd);
+      historyIndex = commandHistory.length;
       if (cmd === "clear") {
         term.clear();
       } else {
@@ -73,11 +86,40 @@ term.onKey(async ({ key, domEvent }) => {
       currentInput = currentInput.slice(0, -1);
       term.write("\b \b");
     }
+  } else if (domEvent.key === "ArrowUp") {
+    // Navigate up in history
+    if (commandHistory.length > 0 && historyIndex > 0) {
+      historyIndex--;
+      // Clear current input from terminal
+      clearCurrentInput();
+      currentInput = commandHistory[historyIndex];
+      term.write(currentInput);
+    }
+  } else if (domEvent.key === "ArrowDown") {
+    // Navigate down in history
+    if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
+      historyIndex++;
+      clearCurrentInput();
+      currentInput = commandHistory[historyIndex];
+      term.write(currentInput);
+    } else if (historyIndex === commandHistory.length - 1) {
+      historyIndex++;
+      clearCurrentInput();
+      currentInput = "";
+    }
   } else if (printable) {
     currentInput += key;
     term.write(key);
   }
 });
+
+// Helper to clear the current input from the terminal line
+function clearCurrentInput() {
+  // Move cursor back and clear the line after the prompt
+  for (let i = 0; i < currentInput.length; i++) {
+    term.write("\b \b");
+  }
+}
 
 async function runCommand(cmd) {
   try {
