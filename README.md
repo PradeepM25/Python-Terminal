@@ -29,40 +29,27 @@ A web-based terminal emulator built with FastAPI (Python backend) and a modern J
 
 
 ``````
-
-backend/backend/
-
-  app.py                # FastAPI app, API endpoints  app.py                # FastAPI app, API endpoints
-
-  requirements.txt      # Backend dependencies  requirements.txt      # Backend dependencies
-
-  terminal_core.py      # Command routing for backend  terminal_core.py      # Command routing for backend
-
-  terminal_project/  terminal_project/
-
-    core.py             # Command processing logic    core.py             # Command processing logic
-
-    main.py             # CLI entry point for local terminal    main.py             # CLI entry point for local terminal
-
-    requirements.txt    # Core dependencies    requirements.txt    # Core dependencies
-
-    commands/    commands/
-
-      file_ops.py       # File operation commands      file_ops.py       # File operation commands
-
-      file_view.py      # File viewing commands      file_view.py      # File viewing commands
-
-      system_ops.py     # System monitoring commands      system_ops.py     # System monitoring commands
-
-      utils.py          # Help/manual command      utils.py          # Help/manual command
-
-frontend/frontend/
-
-  index.html            # Main HTML file  index.html            # Main HTML file
-
-  script.js             # Terminal frontend logic (with history navigation)  script.js             # Terminal frontend logic
-
-  style.css             # Styling for terminal UI  style.css             # Styling for terminal UI
+C:.
+├── backend/
+│   ├── app.py                     # FastAPI app, API endpoints
+│   ├── requirements.txt           # Backend dependencies
+│   ├── terminal_core.py           # Command routing for backend
+│   └── __pycache__/               # Compiled Python cache
+├── frontend/
+│   ├── index.html                 # Main HTML file
+│   ├── script.js                  # Terminal frontend logic
+│   └── style.css                  # Styling for terminal UI
+└── terminal_project/
+    ├── core.py                    # Command processing logic
+    ├── main.py                    # CLI entry point
+    ├── requirements.txt           # Core dependencies
+    ├── __pycache__/               # Compiled Python cache
+    └── commands/
+        ├── file_ops.py            # File operation commands
+        ├── file_view.py           # File viewing commands
+        ├── system_ops.py          # System monitoring commands
+        ├── utils.py               # Help/manual command
+        └── __pycache__/           # Compiled Python cache
 
 ``````
 
